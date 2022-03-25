@@ -1,20 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
+import { handleError } from './src/global/utils/handleError';
 
-export default function App() {
+import { Routes } from './src/routes/Router';
+
+const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 20000,
+        onError: handleError,
+        retry: false,
+      },
+      mutations: {
+        onError: handleError,
+      },
+    },
+  });
+
+  setLogger({
+    log: () => null,
+    warn: () => null,
+    error: () => null,
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <Routes />
+      <StatusBar style="light" hidden />
+    </QueryClientProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
