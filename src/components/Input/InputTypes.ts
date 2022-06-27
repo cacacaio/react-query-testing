@@ -45,6 +45,7 @@ type ExtractGeneric<P> = P extends Control<infer T> ? T : never;
 
 /**
  * Devolve os nomes baseado no tipo do control
+ * Só funciona até 3 nested levels, mas é possível definir o número de níveis alterando o 3 para o numero de níveis desejado
  */
 export type Names<T> = Leaves<ExtractGeneric<T>, 3>;
 
