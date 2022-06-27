@@ -1,19 +1,8 @@
 import React from 'react';
-import { Control, useController } from 'react-hook-form';
-import { LogBox, TextInput as TextInputBase, TextInputProps } from 'react-native';
+import { useController } from 'react-hook-form';
+import { TextInput as TextInputBase, TextInputProps } from 'react-native';
+import { BaseControl, Names } from './InputTypes';
 import { Container, ErrorMessage, TextInput } from './styles';
-
-/**
- * Extrai o generico do control
- */
-type ExtractGeneric<P> = P extends Control<infer T> ? T : never;
-
-/**
- * Devolve os nomes baseado no tipo do control
- */
-type Names<T> = keyof ExtractGeneric<T>;
-
-type BaseControl = Control<any, any>;
 
 type Props<ControlType> = {
   control: ControlType;
